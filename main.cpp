@@ -16,7 +16,7 @@ void printmenu () {
 options inputcheck () {
  int var = -1;
  cin >> var;
- while (!(0 < var && var < cnt_opts)) {
+ while (!(open <= var && var < cnt_opts)) { // Иначе не работало бы
     cout << "Error, try again" << endl;
     cin >> var;
  }
