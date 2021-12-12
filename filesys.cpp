@@ -94,12 +94,13 @@ switch (mode){
             return NULL;
         }
         tempfile = (struct File*)malloc(sizeof(File));
-        strcpy((char*)&(tempdir->filename), filename);
+        strcpy((char*)&(tempfile->filename), filename);
         tempfile->filelen = tempdir->filelen;
         tempfile->mode = mode;
         tempfile->data[0] = 0;
         tempfile->curpos = 0;
         tempfile->endof = 0;
+        memcpy((void*)(tempfile->inode), (void*)(tempdir->inode), sizeof(tempdir->inode));
         free(tempdir);
         return tempfile;
         break;
@@ -157,9 +158,23 @@ FILE* data;
 data = fopen("filedata.txt", "rb+");
 if (!data)
     return -1;
+long t;
+if ((fileptr->filelen) == 0){
+    fseek(data, 0, SEEK_END);
+    t=ftell(data);
+    int a = (t/4096);
+    int b = t%4096;
+    cout<<"a=" << a << " b=" << b << " t=" << t << endl;
+    if (b) {
+        fwrite(fileptr->data, 4096-b, 1, data);
+        a++;
+    }
+    (fileptr->inode[0])=a;
+}
 int a = (fileptr->curpos)/4096; // inode[number]
 int b = (fileptr->inode[a])*4096+(fileptr->curpos)%4096;
 fseek(data, b, 0);
+cout << "b=" << b <<endl;
 int c = 4096-(fileptr->curpos)%4096; // left in block
 if (writesize<=c){
     fwrite(buf, writesize, 1, data);

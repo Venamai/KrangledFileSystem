@@ -2,7 +2,7 @@
 #include "filesys.h"
 using namespace std;
 
-struct File * tempfile;
+struct File * tempfile = NULL;
 enum options {open=1, read, write, flist, del, close, mexit, cnt_opts};
 
 void printmenu () {
@@ -16,6 +16,9 @@ void printmenu () {
  cout << "5. Delete file" << endl;
  cout << "6. Close file" << endl;
  cout << "7. Exit" << endl;
+ if (tempfile){
+    cout << "File " << (char*)(tempfile->filename) << " is opened" << endl;
+ }
 }
 
 options inputcheck () {
@@ -46,6 +49,7 @@ return 0;
 }
 void readfile(){
 char buf[4096];
+memset(buf, 0, 4096);
 int ret;
 while (tempfile->endof == 0) {
     ret = fileread((void*)buf,4096, tempfile);
@@ -66,6 +70,10 @@ do {
     char filename[512];
     switch(var) {
     case open:
+        if (tempfile != NULL){
+            cout << "Close the opened file"<< endl;
+            break;
+        }
         int mode;
         cout << "Enter file name" << endl;
         cin >> filename;
@@ -94,6 +102,7 @@ do {
         break;
     case close:
         closefile(tempfile);
+        tempfile = NULL;
         cout << "File has been closed" << endl;
         break;
     }
