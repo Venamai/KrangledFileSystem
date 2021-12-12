@@ -164,7 +164,7 @@ if ((fileptr->filelen) == 0){
     t=ftell(data);
     int a = (t/4096);
     int b = t%4096;
-    cout<<"a=" << a << " b=" << b << " t=" << t << endl;
+    //cout<<"a=" << a << " b=" << b << " t=" << t << endl;
     if (b) {
         fwrite(fileptr->data, 4096-b, 1, data);
         a++;
@@ -174,7 +174,7 @@ if ((fileptr->filelen) == 0){
 int a = (fileptr->curpos)/4096; // inode[number]
 int b = (fileptr->inode[a])*4096+(fileptr->curpos)%4096;
 fseek(data, b, 0);
-cout << "b=" << b <<endl;
+//cout << "b=" << b <<endl;
 int c = 4096-(fileptr->curpos)%4096; // left in block
 if (writesize<=c){
     fwrite(buf, writesize, 1, data);

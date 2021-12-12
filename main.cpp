@@ -17,7 +17,7 @@ void printmenu () {
  cout << "6. Close file" << endl;
  cout << "7. Exit" << endl;
  if (tempfile){
-    cout << "File " << (char*)(tempfile->filename) << " is opened" << endl;
+    cout << "File " << (char*)(tempfile->filename) << " is opened" << " in mode " << tempfile->mode << endl;
  }
 }
 
