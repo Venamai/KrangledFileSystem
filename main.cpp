@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+enum options {open=1, write, make, del, close, cnt_opts};
+
 void printmenu () {
  system("cls");
  cout << "What do you want to do?" << endl;
@@ -11,14 +13,14 @@ void printmenu () {
  cout << "5. Exit" << endl;
 }
 
-int inputcheck (int cnt) {
- int var;
- while (var <1 || var > cnt) {
+options inputcheck () {
+ int var = -1;
+ cin >> var;
+ while (!(0 < var && var < cnt_opts)) {
+    cout << "Error, try again" << endl;
     cin >> var;
-    if (var <1 || var > cnt)
-        cout << "Error, try again" << endl;
  }
- return var;
+ return static_cast<options>(var);
 }
 
 int openfile(){
@@ -45,24 +47,27 @@ int main() {
 int var;
 do {
     printmenu();
-    var=inputcheck(5);
+    var=inputcheck();
     switch(var) {
-    case 1:
+    case open:
         openfile();
         break;
-    case 2:
+    case write:
         writefile();
         break;
-    case 3:
+    case make:
         makefile();
         break;
-    case 4:
+    case del:
         rmfile();
         break;
+    default:
+        break;
     }
-    if (var != 5)
+    if (var != close)
         system("pause");
-} while (var != 5);
+} while (var != close);
+
 
 return 0;
 } 
