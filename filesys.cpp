@@ -13,7 +13,7 @@ while (1){
     if (dirs.eof())
         break;
         if(tempdir->deleted == 0)
-    cout << tempdir->filename << '\t' << tempdir->filelen << '\t' << tempdir->index << endl;//'\t' << "deleted=" << tempdir->deleted << endl;
+            cout << tempdir->filename << '\t' << tempdir->filelen << '\t' << tempdir->index << endl;//'\t' << "deleted=" << tempdir->deleted << endl;
 }
 dirs.close();
 free(tempdir);
